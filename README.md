@@ -41,6 +41,8 @@ Functional Simulation:
       (The path of cshrc could vary depending on the installation destination)
       
 	After this you can see the window like below 
+![Screenshot 2025-04-30 084114](https://github.com/user-attachments/assets/46f3a3c9-36c2-449c-92c7-5fc0e9dd8e10)
+
 
 
 ## Fig 2: Invoke the Cadence Environment
@@ -57,6 +59,33 @@ Functional Simulation:
 ### Verilog code for 4-Bit Up-Down Counter:
 
 */Program  for  4-Bit Up-Down Counter
+`timescale 1ns/1ns
+
+module counter(clk,m,rst,count);
+
+input clk,m,rst;
+
+output reg [3:0] count;
+
+always@(posedge clk or negedge rst)
+
+begin
+
+if (!rst)
+
+count=0;
+
+else if(m)
+
+count=count+1;
+
+else
+
+count=count-1;
+
+end
+
+endmodule
 
 	Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
@@ -67,6 +96,47 @@ Functional Simulation:
 ### Test-bench code for 4-Bit Up-Down Counter:
 
 */Test bench Program  for  4-Bit Up-Down Counter
+`timescale 1ns/1ns
+
+module counter_test;
+
+reg clk,rst,m;
+
+wire [3:0] count;
+
+initial
+
+begin
+
+clk=0;
+
+rst=0;#5;
+
+rst=1;
+
+end
+
+initial
+
+begin
+
+m=1;
+
+#160 m=0;
+
+end
+
+counter dut(clk,m,rst,count);
+
+always #5 clk=~clk;
+
+initial $monitor("Time=%t rst=%b clk=%b count=%b" , $time,rst,clk,count);
+
+initial
+
+#320 $finish;
+
+endmodule
 
 ### To Launch Simulation tool
 	linux:/> nclaunch -new&            // “-new” option is used for invoking NCVERILOG for the first time for any design
@@ -74,6 +144,9 @@ Functional Simulation:
 	linux:/> nclaunch&                 // On subsequent calls to NCVERILOG
 
 It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple step
+
+![Screenshot 2025-04-30 085231](https://github.com/user-attachments/assets/6966471e-ee70-4664-ae81-a483ed40afe7)
+
 
 ## Fig 3: Setting Multi-step simulation
 
@@ -122,6 +195,8 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 Left side select the file and in Tools : launch verilog compiler with current selection will get enable. Click it to compile the code 
 
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation 
+![image](https://github.com/user-attachments/assets/9b73baee-791f-4cd6-a9db-7a73b2ed554e)
+
 
 ## Fig 7: Compiled database in worklib
 
@@ -151,6 +226,8 @@ It contains statements that map logical library names to their physical director
 9.	It also establishes net connectivity and prepares all of this for simulation
     
 	After elaboration the file will come under snapshot. Select the test bench and simulate it. 
+![image](https://github.com/user-attachments/assets/706d71b8-c3b8-49b6-ae41-0afb72aedbb0)
+
 
 ## Fig 8: Elaboration Launch Option
 
@@ -163,12 +240,20 @@ It contains statements that map logical library names to their physical director
 	Simulation allow to dump design and test bench signals into a waveform 
 
 	Steps for simulation – Run the simulation command with simulator options
+![image](https://github.com/user-attachments/assets/3302dba2-2f23-45d7-bcde-70049f64ed76)
+
 
 ## Fig 9: Design Browser window for simulation
+![image](https://github.com/user-attachments/assets/e9caaab6-5a16-453e-a66d-a190b019a052)
+
 
 ## Fig 10: Simulation Waveform Window
+![Screenshot 2025-04-30 085433](https://github.com/user-attachments/assets/b4a484be-cf37-49f7-ab29-2c9410f3ab4a)
+
 
 ## Fig 11: Simulation Waveform Window
+![Screenshot 2025-04-30 085433](https://github.com/user-attachments/assets/7f4adc09-90bf-40ca-b01e-2bde6137131a)
+
 
 ### Result
 
