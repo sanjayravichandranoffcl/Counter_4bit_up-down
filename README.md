@@ -42,6 +42,9 @@ Functional Simulation:
       
 	After this you can see the window like below 
 
+![Screenshot 2025-04-30 084155](https://github.com/user-attachments/assets/83ee1db6-7b08-4477-915e-3d9d701fdc32)
+
+
 
 ## Fig 2: Invoke the Cadence Environment
 
@@ -57,6 +60,31 @@ Functional Simulation:
 ### Verilog code for 4-Bit Up-Down Counter:
 
 */Program  for  4-Bit Up-Down Counter
+`timescale 1ns/1ns
+
+module counter(clk,m,rst,count);
+
+input clk,m,rst;
+
+output reg [3:0] count;
+
+always@(posedge clk or negedge rst)
+
+begin
+
+if (!rst)
+
+count=0;
+
+else if(m)
+
+count=count+1;
+
+else
+
+count=count-1;
+
+end
 
 	Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
@@ -67,6 +95,47 @@ Functional Simulation:
 ### Test-bench code for 4-Bit Up-Down Counter:
 
 */Test bench Program  for  4-Bit Up-Down Counter
+`timescale 1ns/1ns
+
+module counter_test;
+
+reg clk,rst,m;
+
+wire [3:0] count;
+
+initial
+
+begin
+
+clk=0;
+
+rst=0;#5;
+
+rst=1;
+
+end
+
+initial
+
+begin
+
+m=1;
+
+#160 m=0;
+
+end
+
+counter dut(clk,m,rst,count);
+
+always #5 clk=~clk;
+
+initial $monitor("Time=%t rst=%b clk=%b count=%b" , $time,rst,clk,count);
+
+initial
+
+#320 $finish;
+
+endmodule
 
 ### To Launch Simulation tool
 	linux:/> nclaunch -new&            // “-new” option is used for invoking NCVERILOG for the first time for any design
@@ -74,6 +143,8 @@ Functional Simulation:
 	linux:/> nclaunch&                 // On subsequent calls to NCVERILOG
 
 It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple step
+![Screenshot 2025-04-30 085231](https://github.com/user-attachments/assets/1f0b8e8c-84bd-4718-805b-313f7ec4d15c)
+
 
 ## Fig 3: Setting Multi-step simulation
 
@@ -98,6 +169,8 @@ Click the cds.lib file and save the file by clicking on Save option
 	Left side you can see the HDL files. Right side of the window has worklib and snapshots directories listed.
 
 	Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation
+![Screenshot 2025-04-30 092507](https://github.com/user-attachments/assets/94903892-36d7-4b38-86e3-fc39580206f9)
+
 
 ## Fig 6: Nclaunch Window
 
@@ -122,6 +195,8 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 Left side select the file and in Tools : launch verilog compiler with current selection will get enable. Click it to compile the code 
 
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation 
+![Screenshot 2025-04-30 092507](https://github.com/user-attachments/assets/45a6a37b-06e8-425d-b6b6-6b5c790a0073)
+
 
 ## Fig 7: Compiled database in worklib
 
@@ -151,6 +226,8 @@ It contains statements that map logical library names to their physical director
 9.	It also establishes net connectivity and prepares all of this for simulation
     
 	After elaboration the file will come under snapshot. Select the test bench and simulate it. 
+![Screenshot 2025-04-30 092707](https://github.com/user-attachments/assets/7252f2b3-d58d-4874-b10e-181783e00ea1)
+
 
 ## Fig 8: Elaboration Launch Option
 
@@ -163,12 +240,21 @@ It contains statements that map logical library names to their physical director
 	Simulation allow to dump design and test bench signals into a waveform 
 
 	Steps for simulation – Run the simulation command with simulator options
+![Screenshot 2025-04-30 092805](https://github.com/user-attachments/assets/64f94958-5320-473a-942e-6f5e551cdba8)
+
 
 ## Fig 9: Design Browser window for simulation
 
+![Screenshot 2025-04-30 092854](https://github.com/user-attachments/assets/c773c80b-9083-4db6-9713-a77f072a1a72)
+
 ## Fig 10: Simulation Waveform Window
 
+![Screenshot 2025-04-30 092854](https://github.com/user-attachments/assets/83e77a93-e3d8-4beb-859f-35c215b3ba23)
+
 ## Fig 11: Simulation Waveform Window
+
+![Screenshot 2025-04-30 085433](https://github.com/user-attachments/assets/3d273319-8fb2-477e-be85-3a81d84afcce)
+
 
 ### Result
 
